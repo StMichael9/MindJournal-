@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
-from sqlalchemy import CheckConstraint
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime
 from flask_bcrypt import Bcrypt
@@ -31,10 +30,18 @@ class User(db.Model):
 
     @password_hash.setter
     def password_hash(self, password):
+        if not password or password.strip() == "":
+            raise ValueError("Must enter password")
+
+        if len(password) < 6:
+            raise ValueError("Password must be at least 6 characters")
+
         self._password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def authenticate(self, password):
         return bcrypt.check_password_hash(self._password_hash, password)
+
+
     
 
 class ReflectionEntry(db.Model):
