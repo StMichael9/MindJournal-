@@ -42,7 +42,7 @@ class ReflectionEntrySchema(Schema):
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True)
 
-    user_id = fields.Int(required=True)
+    user_id = fields.Int(dump_only=True)
     reflection_prompt_id = fields.Int(required=True)
     mood_log_id = fields.Int(allow_none=True)
 
