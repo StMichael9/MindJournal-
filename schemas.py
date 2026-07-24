@@ -8,7 +8,7 @@ class UserSchema(Schema):
 class TagSchema(Schema):
     id = fields.Int(dump_only=True)
     title = fields.Str(required=True)
-    color = fields.Int()
+    color = fields.Str()
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True)
 

@@ -1,9 +1,10 @@
-from flask import request, session
+from flask import request, session, Blueprint
 from marshmallow import ValidationError
-from . import mood_log_bp
 from models import db, MoodLog
 from schemas import MoodLogSchema
 from sqlalchemy.exc import SQLAlchemyError
+
+mood_log_bp = Blueprint("mood_log_bp", __name__)
 
 mood_log_schema = MoodLogSchema()
 mood_logs_schema = MoodLogSchema(many=True)

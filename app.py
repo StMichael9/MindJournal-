@@ -6,9 +6,9 @@ from dotenv import load_dotenv
 
 from models import db
 from routes.auth import auth_bp
-from routes.tags import tag_bp
-from routes.reflections import reflection_bp
-from routes.moodlogs import moodlog_bp
+from routes.tag_routes import tag_bp
+from routes.reflection_routes import reflection_bp
+from routes.mood_routes import mood_log_bp
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
 
@@ -28,7 +28,7 @@ migrate = Migrate(app, db)
 app.register_blueprint(auth_bp, url_prefix="/")
 app.register_blueprint(tag_bp, url_prefix="/tags")
 app.register_blueprint(reflection_bp, url_prefix="/reflections")
-app.register_blueprint(moodlog_bp, url_prefix="/moodlogs")
+app.register_blueprint(mood_log_bp, url_prefix="/moodlogs")
 
 @app.route("/")
 def home():
