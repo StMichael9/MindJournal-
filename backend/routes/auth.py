@@ -13,7 +13,8 @@ def signup():
         return {"error": "User already exists"}, 422
 
     try:
-        new_user = User(email=email, password_hash=password)
+        new_user = User(email=email)
+        new_user.password_hash = password
         db.session.add(new_user)
         db.session.commit()
     except ValueError as e:
@@ -21,6 +22,7 @@ def signup():
         return {"error": str(e)}, 422
 
     return {"id": new_user.id, "email": new_user.email}, 201
+
     
 
 @auth_bp.post('/login')

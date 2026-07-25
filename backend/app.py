@@ -15,6 +15,14 @@ load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
+CORS(
+    app,
+    supports_credentials=True,
+    origins=[
+        "http://localhost:5173"
+    ]
+)
+
 class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -35,4 +43,4 @@ def home():
     return {"message": "Backend running"}
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
