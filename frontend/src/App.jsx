@@ -7,10 +7,15 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 
-// Import reflections from src/reflections
+// Reflections
 import ReflectionsList from "./reflections/ReflectionsList";
 import ReflectionDetail from "./reflections/ReflectionDetail";
 import ReflectionForm from "./reflections/ReflectionForm";
+
+// Mood Logs
+import MoodLogsList from "./mood/MoodLogsList";
+import MoodLogDetail from "./mood/MoodLogDetail";
+import MoodLogForm from "./mood/MoodLogForm";
 
 function App() {
   return (
@@ -65,6 +70,43 @@ function App() {
             element={
               <ProtectedRoute>
                 <ReflectionForm />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Mood Logs */}
+          <Route
+            path="/mood_logs"
+            element={
+              <ProtectedRoute>
+                <MoodLogsList />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/mood_logs/new"
+            element={
+              <ProtectedRoute>
+                <MoodLogForm />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/mood_logs/:id"
+            element={
+              <ProtectedRoute>
+                <MoodLogDetail />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/mood_logs/:id/edit"
+            element={
+              <ProtectedRoute>
+                <MoodLogForm />
               </ProtectedRoute>
             }
           />
