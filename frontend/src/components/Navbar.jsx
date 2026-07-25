@@ -10,6 +10,7 @@ export default function Navbar() {
       {user ? (
         <>
           <Link to="/">Home</Link>
+          <Link to="/reflections">Reflections</Link>
           <button onClick={logout}>Logout</button>
         </>
       ) : (
