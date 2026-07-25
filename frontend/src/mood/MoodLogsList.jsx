@@ -24,20 +24,44 @@ export default function MoodLogsList() {
   }, []);
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Your Mood Logs</h1>
+    <section className="page">
+      <div className="page-head">
+        <div>
+          <div className="eyebrow">Mood tracking</div>
+          <h1>Your mood logs</h1>
+          <p className="page-lead">
+            Quick entries that help you see emotional patterns over time.
+          </p>
+        </div>
 
-      <Link to="/mood_logs/new">Create Mood Log</Link>
+        <Link to="/mood_logs/new" className="button button-primary">
+          New mood log
+        </Link>
+      </div>
 
-      <ul>
-        {logs.map((log) => (
-          <li key={log.id}>
-            <Link to={`/mood_logs/${log.id}`}>
-              Mood {log.mood_value}/10 — {formatDate(log.created_at)}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+      {logs.length === 0 ? (
+        <div className="empty-state">
+          <h2>No mood logs yet</h2>
+          <p>
+            Log your first mood to start building a clearer picture of your
+            week.
+          </p>
+        </div>
+      ) : (
+        <ul className="card-list">
+          {logs.map((log) => (
+            <li key={log.id} className="card-list__item">
+              <Link to={`/mood_logs/${log.id}`} className="list-card">
+                <div className="list-card__body">
+                  <h2>Mood {log.mood_value}/10</h2>
+                  <p className="muted-copy">{formatDate(log.created_at)}</p>
+                </div>
+                <span className="list-card__action">Open</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }

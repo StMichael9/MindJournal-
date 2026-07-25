@@ -30,19 +30,50 @@ export default function MoodLogDetail() {
     navigate("/mood_logs");
   };
 
-  if (!log) return <p>Loading...</p>;
+  if (!log)
+    return (
+      <section className="page">
+        <p className="loading-state">Loading mood log...</p>
+      </section>
+    );
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Mood {log.mood_value}/10</h1>
-      <p>{log.notes}</p>
-      <p>Logged at: {formatDate(log.created_at)}</p>
+    <section className="page page-narrow">
+      <article className="panel panel-reading">
+        <div className="panel__header">
+          <div>
+            <div className="eyebrow">Mood log</div>
+            <h1>Mood {log.mood_value}/10</h1>
+            <p className="page-lead">Logged at {formatDate(log.created_at)}</p>
+          </div>
 
-      <Link to={`/mood_logs/${id}/edit`}>Edit</Link>
-      <button onClick={handleDelete}>Delete</button>
+          <div className="actions-row">
+            <Link
+              to={`/mood_logs/${id}/edit`}
+              className="button button-secondary"
+            >
+              Edit
+            </Link>
+            <button
+              type="button"
+              className="button button-danger"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
 
-      <br />
-      <Link to="/mood_logs">Back</Link>
-    </div>
+        <p className="reading-copy">
+          {log.notes || "No notes were added for this entry."}
+        </p>
+
+        <div className="panel__footer">
+          <Link to="/mood_logs" className="nav-link">
+            Back to mood logs
+          </Link>
+        </div>
+      </article>
+    </section>
   );
 }

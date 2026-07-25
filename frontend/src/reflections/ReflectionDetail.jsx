@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
+import TagAssign from "../tags/TagAssign";
 
 export default function ReflectionDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [reflection, setReflection] = useState(null);
 
-  useEffect(() => {
+  const fetchReflection = () => {
     api.get(`/reflections/${id}`).then((res) => {
       setReflection(res.data);
     });
+  };
+
+  useEffect(() => {
+    fetchReflection();
   }, [id]);
 
   const handleDelete = async () => {
@@ -18,18 +23,50 @@ export default function ReflectionDetail() {
     navigate("/reflections");
   };
 
-  if (!reflection) return <p>Loading...</p>;
+  if (!reflection)
+    return (
+      <section className="page">
+        <p className="loading-state">Loading reflection...</p>
+      </section>
+    );
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>{reflection.title}</h1>
-      <p>{reflection.content}</p>
+    <section className="page page-narrow">
+      <article className="panel panel-reading">
+        <div className="panel__header">
+          <div>
+            <div className="eyebrow">Reflection</div>
+            <h1>{reflection.title}</h1>
+          </div>
+          <div className="actions-row">
+            <Link
+              to={`/reflections/${id}/edit`}
+              className="button button-secondary"
+            >
+              Edit
+            </Link>
+            <button
+              type="button"
+              className="button button-danger"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
 
-      <Link to={`/reflections/${id}/edit`}>Edit</Link>
-      <button onClick={handleDelete}>Delete</button>
+        <p className="reading-copy">{reflection.content}</p>
 
-      <br />
-      <Link to="/reflections">Back</Link>
-    </div>
+        <div className="section-divider" />
+
+        <TagAssign reflection={reflection} onUpdate={fetchReflection} />
+
+        <div className="panel__footer">
+          <Link to="/reflections" className="nav-link">
+            Back to reflections
+          </Link>
+        </div>
+      </article>
+    </section>
   );
 }

@@ -61,39 +61,59 @@ export default function ReflectionForm() {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>{isEditing ? "Edit Reflection" : "New Reflection"}</h1>
+    <section className="page page-narrow">
+      <div className="panel">
+        <div className="panel__header panel__header--stacked">
+          <div className="eyebrow">Reflection entry</div>
+          <h1>{isEditing ? "Edit Reflection" : "New Reflection"}</h1>
+          <p className="page-lead">
+            Use a prompt to frame your thoughts before you write.
+          </p>
+        </div>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="form-error">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-        />
+        <form className="journal-form" onSubmit={handleSubmit}>
+          <label className="field">
+            <span>Title</span>
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="A short name for this moment"
+            />
+          </label>
 
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="Write your reflection..."
-        />
+          <label className="field">
+            <span>Prompt</span>
+            <select
+              value={promptId}
+              onChange={(e) => setPromptId(Number(e.target.value))}
+            >
+              {PROMPTS.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.text}
+                </option>
+              ))}
+            </select>
+          </label>
 
-        <select
-          value={promptId}
-          onChange={(e) => setPromptId(Number(e.target.value))}
-        >
-          {PROMPTS.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.text}
-            </option>
-          ))}
-        </select>
+          <label className="field">
+            <span>Reflection</span>
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="Write your reflection..."
+              rows="10"
+            />
+          </label>
 
-        <button type="submit">
-          {isEditing ? "Save Changes" : "Create Reflection"}
-        </button>
-      </form>
-    </div>
+          <div className="actions-row">
+            <button type="submit" className="button button-primary">
+              {isEditing ? "Save Changes" : "Create Reflection"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
   );
 }
