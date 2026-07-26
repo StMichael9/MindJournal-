@@ -6,12 +6,20 @@ export default function Signup() {
   const { signup } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signup(email, password);
-    navigate("/");
+    setError(null);
+    try {
+      await signup(email, password);
+      navigate("/");
+    } catch (err) {
+      setError(
+        err.response?.data?.error || "Something went wrong. Please try again.",
+      );
+    }
   };
 
   return (
@@ -24,6 +32,8 @@ export default function Signup() {
             Set up your private space for mood tracking and reflection.
           </p>
         </div>
+
+        {error && <p className="form-error">{error}</p>}
 
         <form className="journal-form" onSubmit={handleSubmit}>
           <label className="field">

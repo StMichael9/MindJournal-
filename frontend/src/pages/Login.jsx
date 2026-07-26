@@ -6,12 +6,18 @@ export default function Login() {
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password);
-    navigate("/");
+    setError(null);
+    try {
+      await login(email, password);
+      navigate("/");
+    } catch (err) {
+      setError(err.response?.data?.error || "Invalid email or password.");
+    }
   };
 
   return (
@@ -24,6 +30,8 @@ export default function Login() {
             Return to your journal and pick up where you left off.
           </p>
         </div>
+
+        {error && <p className="form-error">{error}</p>}
 
         <form className="journal-form" onSubmit={handleSubmit}>
           <label className="field">
