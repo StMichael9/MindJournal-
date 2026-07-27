@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import InsightsOverview from "../components/InsightsOverview";
 
 export default function Dashboard() {
   const { user } = useContext(AuthContext);
@@ -48,6 +49,8 @@ export default function Dashboard() {
           </p>
         </article>
       </div>
+
+      <InsightsOverview />
     </section>
   );
 }
