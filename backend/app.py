@@ -19,7 +19,8 @@ CORS(
     app,
     supports_credentials=True,
     origins=[
-        "http://localhost:5173"
+        "http://localhost:5173",
+        "https://mind-journal-nine.vercel.app",
     ]
 )
 
@@ -29,6 +30,11 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev")
 
 app.config.from_object(Config)
+
+app.config.update(
+    SESSION_COOKIE_SAMESITE="None",
+    SESSION_COOKIE_SECURE=True,
+)
 
 db.init_app(app)
 migrate = Migrate(app, db)
