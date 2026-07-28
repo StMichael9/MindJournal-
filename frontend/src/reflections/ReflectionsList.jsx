@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
+import { formatApiDate } from "../utils/date";
 
 export default function ReflectionsList() {
   const [reflections, setReflections] = useState([]);
@@ -38,6 +39,7 @@ export default function ReflectionsList() {
               <Link to={`/reflections/${r.id}`} className="list-card">
                 <div className="list-card__body">
                   <h2>{r.title}</h2>
+                  <p className="muted-copy">{formatApiDate(r.created_at)}</p>
                   {r.tags && r.tags.length > 0 && (
                     <div className="tag-row">
                       {r.tags.map((tag) => (

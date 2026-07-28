@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
 import TagAssign from "../tags/TagAssign";
+import { formatApiDate } from "../utils/date";
 
 export default function ReflectionDetail() {
   const { id } = useParams();
@@ -37,6 +38,9 @@ export default function ReflectionDetail() {
           <div>
             <div className="eyebrow">Reflection</div>
             <h1>{reflection.title}</h1>
+            <p className="page-lead">
+              Created {formatApiDate(reflection.created_at)}
+            </p>
           </div>
           <div className="actions-row">
             <Link

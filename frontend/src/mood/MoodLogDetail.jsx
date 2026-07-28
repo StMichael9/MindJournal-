@@ -1,17 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
-
-function formatDate(isoString) {
-  return new Date(isoString).toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
-}
+import { formatApiDate } from "../utils/date";
 
 export default function MoodLogDetail() {
   const { id } = useParams();
@@ -44,7 +34,9 @@ export default function MoodLogDetail() {
           <div>
             <div className="eyebrow">Mood log</div>
             <h1>Mood {log.mood_value}/10</h1>
-            <p className="page-lead">Logged at {formatDate(log.created_at)}</p>
+            <p className="page-lead">
+              Logged at {formatApiDate(log.created_at)}
+            </p>
           </div>
 
           <div className="actions-row">

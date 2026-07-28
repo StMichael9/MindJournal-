@@ -1,17 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
-
-function formatDate(isoString) {
-  return new Date(isoString).toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
-}
+import { formatApiDate } from "../utils/date";
 
 export default function MoodLogsList() {
   const [logs, setLogs] = useState([]);
@@ -54,7 +44,7 @@ export default function MoodLogsList() {
               <Link to={`/mood_logs/${log.id}`} className="list-card">
                 <div className="list-card__body">
                   <h2>Mood {log.mood_value}/10</h2>
-                  <p className="muted-copy">{formatDate(log.created_at)}</p>
+                  <p className="muted-copy">{formatApiDate(log.created_at)}</p>
                 </div>
                 <span className="list-card__action">Open</span>
               </Link>
