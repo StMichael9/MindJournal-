@@ -1,33 +1,29 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
-import TagAssign from "../tags/TagAssign";
 import { formatApiDate } from "../utils/date";
 
-export default function ReflectionDetail() {
+export default function MoodLogDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [reflection, setReflection] = useState(null);
-
-  const fetchReflection = () => {
-    api.get(`/reflections/${id}`).then((res) => {
-      setReflection(res.data);
-    });
-  };
+  const [log, setLog] = useState(null);
 
   useEffect(() => {
-    fetchReflection();
+    api
+      .get(`/moodlogs/${id}`)
+      .then((res) => setLog(res.data))
+      .catch((err) => console.error(err));
   }, [id]);
 
   const handleDelete = async () => {
-    await api.delete(`/reflections/${id}`);
-    navigate("/reflections");
+    await api.delete(`/moodlogs/${id}`);
+    navigate("/mood_logs");
   };
 
-  if (!reflection)
+  if (!log)
     return (
       <section className="page">
-        <p className="loading-state">Loading reflection...</p>
+        <p className="loading-state">Loading mood log...</p>
       </section>
     );
 
@@ -36,15 +32,16 @@ export default function ReflectionDetail() {
       <article className="panel panel-reading">
         <div className="panel__header">
           <div>
-            <div className="eyebrow">Reflection</div>
-            <h1>{reflection.title}</h1>
+            <div className="eyebrow">Mood log</div>
+            <h1>Mood {log.mood_value}/10</h1>
             <p className="page-lead">
-              Created {formatApiDate(reflection.created_at)}
+              Logged at {formatApiDate(log.created_at)}
             </p>
           </div>
+
           <div className="actions-row">
             <Link
-              to={`/reflections/${id}/edit`}
+              to={`/mood_logs/${id}/edit`}
               className="button button-secondary"
             >
               Edit
@@ -59,15 +56,13 @@ export default function ReflectionDetail() {
           </div>
         </div>
 
-        <p className="reading-copy">{reflection.content}</p>
-
-        <div className="section-divider" />
-
-        <TagAssign reflection={reflection} onUpdate={fetchReflection} />
+        <p className="reading-copy">
+          {log.notes || "No notes were added for this entry."}
+        </p>
 
         <div className="panel__footer">
-          <Link to="/reflections" className="nav-link">
-            Back to reflections
+          <Link to="/mood_logs" className="nav-link">
+            Back to mood logs
           </Link>
         </div>
       </article>
