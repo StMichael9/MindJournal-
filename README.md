@@ -1,4 +1,4 @@
-# MindJournal-
+# MindJournal- https://mind-journal-nine.vercel.app/
 
 A personal journaling application with a JavaScript/CSS frontend and a Python backend.
 
