@@ -21,6 +21,7 @@ CORS(
     origins=[
         "http://localhost:5173",
         "https://mind-journal-nine.vercel.app",
+        "https://mind-journal-8lyrlz7lf-stmichael9s-projects.vercel.app"
     ]
 )
 
