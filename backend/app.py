@@ -15,7 +15,7 @@ from routes.mood_routes import mood_log_bp
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
 
 BASE_DIR = Path(__file__).resolve().parent
-DIST_DIR = BASE_DIR / "dist"
+DIST_DIR = BASE_DIR.parent / "frontend" / "dist"
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
