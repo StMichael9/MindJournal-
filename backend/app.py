@@ -20,8 +20,7 @@ CORS(
     supports_credentials=True,
     origins=[
         "http://localhost:5173",
-        "https://mind-journal-nine.vercel.app",
-        "https://mind-journal-8lyrlz7lf-stmichael9s-projects.vercel.app"
+        "https://mindjournal-1.onrender.com"
     ]
 )
 
