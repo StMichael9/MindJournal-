@@ -304,12 +304,188 @@ a {
 .app-shell {
   min-height: 100svh;
   position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
 }
 
 .app-main {
-  width: min(1120px, calc(100% - 2rem));
-  margin: 0 auto;
-  padding: 2rem 0 3rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  margin: 0;
+  padding: 2rem 2.25rem 3rem;
+}
+
+.sidebar__toggle {
+  display: none;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+.sidebar {
+  width: 18.5rem;
+  flex: 0 0 18.5rem;
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  backdrop-filter: blur(18px);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  border-right: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+  transition:
+    width 220ms ease,
+    flex-basis 220ms ease;
+  overflow: hidden;
+}
+
+.sidebar__header {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.sidebar__collapse {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-h);
+  border-radius: 999px;
+  padding: 0.48rem 0.82rem;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+
+  justify-self: star t;
+  cursor: pointer;
+}
+
+.sidebar__brand {
+  display: block;
+}
+
+.sidebar__subtitle {
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 0.92rem;
+}
+
+.sidebar__nav {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  text-decoration: none;
+  color: var(--text-h);
+  border: 1px solid transparent;
+  background: transparent;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.sidebar__link-short {
+  display: inline-flex;
+  width: 1.85rem;
+  min-width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.73rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+}
+
+.sidebar__link-label {
+  white-space: nowrap;
+}
+
+.sidebar__link:hover {
+  background: color-mix(in srgb, var(--card) 72%, transparent);
+  border-color: color-mix(in srgb, var(--border) 70%, transparent);
+  transform: translateY(-1px);
+}
+
+.sidebar__link--active {
+  background: var(--card);
+  border-color: color-mix(in srgb, var(--accent-strong) 20%, var(--border));
+  box-shadow: var(--shadow-soft);
+}
+
+.sidebar__footer {
+  margin-top: auto;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.sidebar__guest-actions {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.sidebar__user {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar__button {
+  width: 100%;
+}
+
+.sidebar--collapsed {
+  width: 5.4rem;
+  flex-basis: 5.4rem;
+}
+
+.sidebar--collapsed .sidebar__subtitle,
+.sidebar--collapsed .sidebar__link-label,
+.sidebar--collapsed .sidebar__user,
+.sidebar--collapsed .sidebar__button,
+.sidebar--collapsed .sidebar__guest-actions,
+.sidebar--collapsed .sidebar__brand,
+.sidebar--collapsed .sidebar__collapse-label {
+  display: none;
+}
+
+.sidebar--collapsed .sidebar__collapse {
+  width: 100%;
+  padding-inline: 0;
+  text-align: center;
+}
+
+.sidebar--collapsed .sidebar__brand {
+  text-align: center;
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+}
+
+.sidebar--collapsed .sidebar__header {
+  justify-items: stretch;
+}
+
+.sidebar--collapsed .sidebar__link {
+  justify-content: center;
+  padding: 0.65rem;
+}
+
+.sidebar--collapsed .sidebar__link-short {
+  margin: 0;
 }
 
 .topbar {
@@ -418,7 +594,8 @@ a {
 }
 
 .page-narrow {
-  width: min(780px, 100%);
+  width: 100%;
+  max-width: none;
   margin: 0 auto;
 }
 
@@ -711,15 +888,114 @@ input[type="color"] {
   }
 
   .app-main {
-    width: min(100%, calc(100% - 1.25rem));
-    padding-top: 1.25rem;
+    padding: 4.75rem 1rem 2rem;
   }
 
-  .topbar__inner {
-    width: min(100%, calc(100% - 1.25rem));
+  .sidebar__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 60;
+    width: 2.9rem;
+    height: 2.9rem;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text-h);
+    cursor: pointer;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .sidebar__toggle span {
+    display: block;
+    width: 1rem;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+  }
+
+  .sidebar__toggle span + span {
+    margin-left: -1rem;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    border: 0;
+    padding: 0;
+    background: rgba(12, 16, 14, 0.32);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+    z-index: 49;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    width: min(86vw, 19rem);
+    flex-basis: auto;
+    padding-top: 4.9rem;
+    transform: translateX(-100%);
+    transition: transform 200ms ease;
+    box-shadow: 24px 0 48px rgba(0, 0, 0, 0.16);
+  }
+
+  .sidebar--collapsed {
+    width: min(86vw, 19rem);
+    flex-basis: auto;
+  }
+
+  .sidebar__collapse {
+    display: none;
+  }
+
+  .sidebar--collapsed .sidebar__subtitle,
+  .sidebar--collapsed .sidebar__link-label,
+  .sidebar--collapsed .sidebar__user,
+  .sidebar--collapsed .sidebar__button,
+  .sidebar--collapsed .sidebar__guest-actions {
+    display: initial;
+  }
+
+  .sidebar--collapsed .sidebar__link {
+    justify-content: flex-start;
+    padding: 0.9rem 1rem;
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
+  }
+
+  .sidebar--open + .sidebar-backdrop,
+  .sidebar-backdrop--open {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .field--inline {
     max-width: 100%;
+  }
+
+  .page-head,
+  .panel__header,
+  .hero-card,
+  .feature-card,
+  .panel,
+  .empty-state,
+  .list-card,
+  .tag-list__item {
+    padding: 1.1rem;
+  }
+
+  .page {
+    gap: 1rem;
   }
 }
